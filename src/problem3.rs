@@ -58,11 +58,11 @@ impl Primes {
 
     fn is_prime(&mut self, num: u64) -> bool {
         match self.found_primes.get(&num) {
-            Some(is_prime) => *is_prime,
+            Some(&is_prime) => is_prime,
             None => {
                 let round_division = (2..num)
                     .into_iter()
-                    .find(|x| (num as f64 / *x as f64).fract() == 0f64);
+                    .find(|&x| (num as f64 / x as f64).fract() == 0f64);
 
                 let is_prime = match round_division {
                     Some(_) => false,
@@ -82,7 +82,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn correct_result() {
+    fn problem_works() {
         assert_eq!(problem(12), 3);
         assert_eq!(problem(42), 7);
         assert_eq!(problem(128), 2);
