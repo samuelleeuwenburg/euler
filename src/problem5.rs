@@ -12,8 +12,7 @@ fn problem(num: usize) -> u64 {
     for n in 2..(num + 1) {
         let n = n as u64;
         if primes.is_prime(n) {
-            let total = factor_map.get(&n).copied().unwrap_or(1);
-            factor_map.insert(n, total);
+            factor_map.insert(n, 1);
             continue;
         }
 
