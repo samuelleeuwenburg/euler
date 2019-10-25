@@ -9,7 +9,8 @@ fn problem(num: u64) -> u64 {
     prime_factors.last().cloned().unwrap()
 }
 
-fn get_prime_factorization(num: u64) -> Vec<u64> {
+// @TODO: add to Primes impl
+pub fn get_prime_factorization(num: u64) -> Vec<u64> {
     let primes = Primes::new();
 
     fn rec(mut primes: Primes, mut factors: Vec<u64>, x: u64) -> Vec<u64> {
@@ -47,16 +48,17 @@ fn get_prime_factorization(num: u64) -> Vec<u64> {
     rec(primes, vec![], num)
 }
 
-struct Primes {
+// @TODO: move to prime file
+pub struct Primes {
     found_primes: HashMap<u64, bool>,
 }
 
 impl Primes {
-    fn new() -> Primes {
+    pub fn new() -> Primes {
         Primes { found_primes: HashMap::new() }
     }
 
-    fn is_prime(&mut self, num: u64) -> bool {
+    pub fn is_prime(&mut self, num: u64) -> bool {
         match self.found_primes.get(&num) {
             Some(&is_prime) => is_prime,
             None => {
