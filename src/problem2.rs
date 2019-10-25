@@ -32,12 +32,12 @@ mod tests {
     use super::*;
 
     #[test]
-    fn fibonacci_works() {
+    fn fibonacci_test() {
         assert_eq!(fibonacci(21), [1, 2, 3, 5, 8, 13, 21]);
     }
 
     #[test]
-    fn sum_of_4_million_is_correct() {
+    fn problem_test() {
         assert_eq!(problem(), 4_613_732);
     }
 }

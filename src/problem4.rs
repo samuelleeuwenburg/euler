@@ -41,12 +41,12 @@ mod tests {
     use super::*;
 
     #[test]
-    fn problem_works() {
+    fn problem_test() {
         assert_eq!(problem(), (993, 913));
     }
 
     #[test]
-    fn is_palindrome_works() {
+    fn is_palindrome_test() {
         assert_eq!(is_palindrome(1221), true);
         assert_eq!(is_palindrome(1010101), true);
         assert_eq!(is_palindrome(1901091), true);

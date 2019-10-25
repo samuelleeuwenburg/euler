@@ -1,52 +1,38 @@
 #![allow(dead_code)]
-use crate::problem3::{Primes, get_prime_factorization};
+use std::collections::HashMap;
+use std::cmp::max;
+use crate::prime::{Primes};
 
 // 2520 is the smallest number that can be divided by each of the numbers from 1 to 10 without any remainder.  
 // What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?
 fn problem(num: usize) -> u64 {
     let mut primes = Primes::new();
-    let mut final_factors: Vec<u64> = vec![];
+    let mut factor_map: HashMap<u64, u64> = HashMap::new();
 
     for n in 2..(num + 1) {
-        if primes.is_prime(n as u64) {
-            final_factors.push(n as u64);
+        let n = n as u64;
+        if primes.is_prime(n) {
+            let total = factor_map.get(&n).copied().unwrap_or(1);
+            factor_map.insert(n, total);
             continue;
         }
 
-        // merge factors without removing duplicates
-        // @TODO: find a way to write this elegantly
-        let mut factors = final_factors.clone();
-        for p in get_prime_factorization(n as u64) {
-            let result = factors
-                .iter()
-                .enumerate()
-                .find_map(|(i, &x)| if x == p { Some(i) } else { None });
+        let factors = primes.get_prime_factorization(n).into_iter();
 
-            match result {
-                Some(i) => { factors.remove(i); }
-                None => final_factors.push(p as u64)
-            }
+        for p in factor_map.clone().keys() {
+            let x = factor_map.get(p).copied().unwrap_or(0);
+            let y = factors.clone().fold(0, |ys, y| {
+                if y == *p { ys + 1 } else { ys }
+            });
+
+            factor_map.insert(*p, max(x, y));
         }
     }
 
-    final_factors.into_iter().fold(1, |acc, p| acc * p)
+    factor_map.iter().fold(1, |acc, (k, &v)| {
+        acc * k.pow(v as u32)
+    })
 }
-
-fn brute_force(num: u64) -> f64 {
-    let mut x = 1f64;
-
-    'check: loop {
-        for y in (2..num + 1).rev() {
-            if (x / y as f64).fract() != 0.0 {
-                x = x + 1.0;
-                continue 'check;
-            }
-        }
-
-        return x
-    }
-}
-
 
 #[cfg(test)]
 mod tests {
@@ -57,19 +43,5 @@ mod tests {
         assert_eq!(problem(10), 2520);
         assert_eq!(problem(20), 232_792_560);
         assert_eq!(problem(42), 219_060_189_739_591_200);
-    }
-
-    #[test]
-    #[ignore]
-    fn brute_force_test() {
-        assert_eq!(brute_force(3), 6.0);
-        assert_eq!(brute_force(4), 12.0);
-        assert_eq!(brute_force(5), 60.0);
-        assert_eq!(brute_force(6), 60.0);
-        assert_eq!(brute_force(7), 420.0);
-        assert_eq!(brute_force(8), 840.0);
-        assert_eq!(brute_force(9), 2520.0);
-        assert_eq!(brute_force(10), 2520.0);
-        assert_eq!(brute_force(20), 232792560.0);
     }
 }
