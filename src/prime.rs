@@ -5,6 +5,7 @@ pub fn find_primes_up_to(num: u64) -> Vec<u64> {
     fn rec(remaining_nums: &Vec<u64>, p: u64) -> Vec<u64> {
         remaining_nums
             .into_iter()
+            // @TODO: check only next square of p
             .find(|&&n| n != p && (n as f64 / p as f64).fract() == 0.0)
             .map(|_| {
                 let ns: Vec<u64> = remaining_nums
