@@ -1,7 +1,10 @@
 use std::collections::HashMap;
 
-// Sieve of Eratosthenes
-pub fn find_primes_up_to(num: u64) -> Vec<u64> {
+// @TODO implement Sieve of Sundaram
+pub fn _sieve_of_sundaram(_num: u64) {
+}
+
+pub fn sieve_of_eratosthenes(num: u64) -> Vec<u64> {
     fn rec(remaining_nums: &Vec<u64>, p: u64) -> Vec<u64> {
         remaining_nums
             .into_iter()
@@ -116,9 +119,9 @@ mod tests {
     }
 
     #[test]
-    fn find_primes_up_to_test() {
-        assert_eq!(find_primes_up_to(11), vec![2, 3, 5, 7]);
-        assert_eq!(find_primes_up_to(30), vec![2, 3, 5, 7, 11, 13, 17, 19, 23, 29]);
+    fn sieve_of_eratosthenes_test() {
+        assert_eq!(sieve_of_eratosthenes(11), vec![2, 3, 5, 7]);
+        assert_eq!(sieve_of_eratosthenes(30), vec![2, 3, 5, 7, 11, 13, 17, 19, 23, 29]);
     }
 
     #[test]

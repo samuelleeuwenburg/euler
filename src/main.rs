@@ -1,13 +1,15 @@
 mod prime;
 
-mod problem1;
-mod problem2;
-mod problem3;
-mod problem4;
-mod problem5;
-mod problem6;
-mod problem7;
-mod problem8;
+mod problem01;
+mod problem02;
+mod problem03;
+mod problem04;
+mod problem05;
+mod problem06;
+mod problem07;
+mod problem08;
+mod problem09;
+mod problem10;
 
 fn main() {
 }

@@ -1,12 +1,12 @@
 #![allow(dead_code)]
-use crate::prime::{Primes, find_primes_up_to};
+use crate::prime::{Primes, sieve_of_eratosthenes};
 
 // By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13, we can see that the 6th prime is
 // 13.
 //
 // What is the 10_001st prime number?
 fn problem(num: usize) -> u64 {
-    let primes = find_primes_up_to(105_000);
+    let primes = sieve_of_eratosthenes(105_000);
     primes.get(num - 1).unwrap().to_owned()
 }
 
