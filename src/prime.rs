@@ -1,34 +1,32 @@
 use std::collections::HashMap;
 
-// @TODO implement Sieve of Sundaram
-pub fn _sieve_of_sundaram(_num: u64) {
-}
-
 pub fn sieve_of_eratosthenes(num: u64) -> Vec<u64> {
-    fn rec(remaining_nums: &Vec<u64>, p: u64) -> Vec<u64> {
-        remaining_nums
+    let mut nums: Vec<u64> = (2..num)
+        .map(u64::from)
+        .filter(|&i| i % 2 != 0 || i == 2)
+        .collect();
+
+    let mut p = 2;
+    let mut reached_square_root = false;
+
+    while !reached_square_root {
+        nums = nums
             .into_iter()
-            // @TODO: check only next square of p
-            .find(|&&n| n != p && (n as f64 / p as f64).fract() == 0.0)
-            .map(|_| {
-                let ns: Vec<u64> = remaining_nums
-                    .iter()
-                    .copied()
-                    .filter(|&n| n == p || (n as f64 / p as f64).fract() != 0.0)
-                    .collect();
+            .filter(|&i| i % p != 0 || i == p)
+            .collect();
 
-                let next_prime = remaining_nums
-                    .into_iter()
-                    .find(|&&n| n > p)
-                    .unwrap();
+        p = nums
+            .clone()
+            .into_iter()
+            .find(|&n| n > p)
+            .unwrap();
 
-                rec(&ns, *next_prime)
-            })
-            .unwrap_or(remaining_nums.iter().copied().collect())
+        if p as f64 > (num as f64).sqrt() {
+            reached_square_root = true;
+        }
     }
 
-    let nums: Vec<u64> = (2..num).collect();
-    rec(&nums, 2)
+    nums
 }
 
 pub struct Primes {
