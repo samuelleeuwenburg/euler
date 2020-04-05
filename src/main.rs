@@ -10,6 +10,7 @@ mod problem07;
 mod problem08;
 mod problem09;
 mod problem10;
+mod problem11;
 
 fn main() {
 }

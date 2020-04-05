@@ -11,6 +11,7 @@ fn problem(roof: u64) -> u64 {
 mod tests {
     use super::*;
 
+    #[ignore] // this one unfortunately takes 4 seconds on my machine :'(
     #[test]
     fn problem_test() {
         assert_eq!(problem(10), 17);

@@ -1,32 +1,24 @@
 use std::collections::HashMap;
 
 pub fn sieve_of_eratosthenes(num: u64) -> Vec<u64> {
-    let mut nums: Vec<u64> = (2..num)
-        .map(u64::from)
-        .filter(|&i| i % 2 != 0 || i == 2)
-        .collect();
+    let square_root_num = (num as f64).sqrt();
+    let mut nums: Vec<u64> = (3..num).step_by(2).collect();
+    let mut next_prime = 3;
 
-    let mut p = 2;
-    let mut reached_square_root = false;
-
-    while !reached_square_root {
+    while (next_prime as f64) < square_root_num {
         nums = nums
             .into_iter()
-            .filter(|&i| i % p != 0 || i == p)
+            .filter(|&n| n == next_prime || n % next_prime != 0)
             .collect();
 
-        p = nums
-            .clone()
-            .into_iter()
-            .find(|&n| n > p)
-            .unwrap();
-
-        if p as f64 > (num as f64).sqrt() {
-            reached_square_root = true;
-        }
+        next_prime = nums
+            .iter()
+            .find(|&&n| n > next_prime)
+            .unwrap()
+            .to_owned();
     }
 
-    nums
+    [&vec![2], &nums[..]].concat()
 }
 
 pub struct Primes {
